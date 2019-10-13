@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import androidx.test.core.app.ApplicationProvider
 import coil.bitmappool.BitmapPool
-import coil.bitmappool.FakeBitmapPool
 import coil.size.OriginalSize
 import coil.size.PixelSize
 import coil.size.Size
@@ -29,7 +28,7 @@ class BitmapFactoryDecoderTest {
 
     @Before
     fun before() {
-        pool = FakeBitmapPool()
+        pool = BitmapPool(0)
         service = BitmapFactoryDecoder(context)
     }
 

@@ -4,7 +4,6 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import androidx.test.core.app.ApplicationProvider
 import coil.bitmappool.BitmapPool
-import coil.bitmappool.FakeBitmapPool
 import coil.util.getPixels
 import coil.util.isSimilarTo
 import kotlinx.coroutines.runBlocking
@@ -21,7 +20,7 @@ class GrayscaleTransformationTest {
 
     @Before
     fun before() {
-        pool = FakeBitmapPool()
+        pool = BitmapPool(0)
         grayscaleTransformation = GrayscaleTransformation()
     }
 

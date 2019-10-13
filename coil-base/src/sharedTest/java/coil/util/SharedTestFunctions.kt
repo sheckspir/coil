@@ -16,13 +16,15 @@ import coil.size.Scale
 import okhttp3.Headers
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
+import okio.Buffer
 import okio.buffer
 import okio.source
 
 fun createMockWebServer(context: Context, vararg images: String): MockWebServer {
     return MockWebServer().apply {
         images.forEach { image ->
-            val buffer = context.assets.open(image).source().buffer().buffer
+            val buffer = Buffer()
+            context.assets.open(image).source().buffer().readAll(buffer)
             enqueue(MockResponse().setBody(buffer))
         }
         start()
