@@ -4,6 +4,8 @@ package coil.util
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ColorSpace
 import coil.DefaultRequestOptions
 import coil.decode.Options
 import coil.request.CachePolicy
@@ -31,17 +33,33 @@ fun createMockWebServer(context: Context, vararg images: String): MockWebServer 
     }
 }
 
-fun createOptions(): Options {
+fun createOptions(
+    config: Bitmap.Config = Bitmap.Config.ARGB_8888,
+    colorSpace: ColorSpace? = null,
+    scale: Scale = Scale.FILL,
+    allowRgb565: Boolean = false,
+    headers: Headers = Headers.Builder().build(),
+    parameters: Parameters = Parameters.Builder().build(),
+    networkCachePolicy: CachePolicy = CachePolicy.ENABLED,
+    diskCachePolicy: CachePolicy = CachePolicy.ENABLED
+): Options {
     return Options(
-        config = Bitmap.Config.ARGB_8888,
-        colorSpace = null,
-        scale = Scale.FILL,
-        allowRgb565 = false,
-        headers = Headers.Builder().build(),
-        parameters = Parameters.Builder().build(),
-        networkCachePolicy = CachePolicy.ENABLED,
-        diskCachePolicy = CachePolicy.ENABLED
+        config,
+        colorSpace,
+        scale,
+        allowRgb565,
+        headers,
+        parameters,
+        networkCachePolicy,
+        diskCachePolicy
     )
+}
+
+fun Context.decodeBitmapAsset(fileName: String): Bitmap {
+    val options = BitmapFactory.Options().apply {
+        inPreferredConfig = Bitmap.Config.ARGB_8888
+    }
+    return checkNotNull(BitmapFactory.decodeStream(assets.open(fileName), null, options))
 }
 
 inline fun createGetRequest(
