@@ -125,7 +125,7 @@ internal class RealImageLoader(
         .add(AssetUriFetcher(context))
         .add(ContentUriFetcher(context))
         .add(ResourceUriFetcher(context, drawableDecoder))
-        .add(DrawableFetcher(drawableDecoder))
+        .add(DrawableFetcher(context, drawableDecoder))
         .add(BitmapFetcher(context))
         // Decoders
         .add(BitmapFactoryDecoder(context))
